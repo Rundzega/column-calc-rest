@@ -1,5 +1,7 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.InvalidColumnInput;
+
 public class Criteria {
 
     private int finiteElementsNumber;
@@ -30,6 +32,13 @@ public class Criteria {
                     double forcesTolerance,
                     double neutralAxisDepthTolerance) {
 
+        if (finiteElementsNumber <= 0 || xDiscretizationsNumber <= 0 || yDiscretizationsNumber <= 0 ||
+                diagramPointsNumber <= 0 || loadIncrementsNumber <= 0 || maxIterationsPerIncrement <= 0 ||
+                displacementsTolerance <= 0 || forcesTolerance <= 0 || neutralAxisDepthTolerance <= 0) {
+
+            throw new InvalidColumnInput("Invalid criteria input data");
+        }
+
         this.finiteElementsNumber = finiteElementsNumber;
         this.xDiscretizationsNumber = xDiscretizationsNumber;
         this.yDiscretizationsNumber = yDiscretizationsNumber;
@@ -39,7 +48,6 @@ public class Criteria {
         this.displacementsTolerance = displacementsTolerance;
         this.forcesTolerance = forcesTolerance;
         this.neutralAxisDepthTolerance = neutralAxisDepthTolerance;
-
 
     }
 

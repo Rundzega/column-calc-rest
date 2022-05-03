@@ -3,6 +3,8 @@ package com.columncalcrest.wrapper;
 import com.columncalcrest.model.*;
 import com.columncalcrest.model.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.NonNull;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 
 import java.util.ArrayList;
 

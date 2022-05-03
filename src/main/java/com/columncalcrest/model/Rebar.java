@@ -1,5 +1,6 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.InvalidColumnInput;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,6 +25,11 @@ public class Rebar extends CrossSectionElement{
                  @JsonProperty("yCoord") double yCoord) {
 
         super(concreteClass, steelClass, xCoord, yCoord);
+
+        if (diameter <= 0 || concreteClass == null || steelClass == null) {
+            throw new InvalidColumnInput("Invalid rebar input data");
+        }
+
         this.area = (Math.PI*Math.pow(diameter, 2))/400; //cm2
         this.rebarFailed = false;
 

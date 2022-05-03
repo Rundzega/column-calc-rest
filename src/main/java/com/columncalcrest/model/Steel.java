@@ -1,5 +1,6 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.InvalidColumnInput;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,6 +20,10 @@ public class Steel {
                  @JsonProperty("gammaSteel")double gammaSteel,
                  @JsonProperty("youngModulus")double youngModulus,
                  @JsonProperty("yieldStrain")double yieldStrain) {
+
+        if (fyk <= 0 || gammaSteel <= 0 || youngModulus <= 0 || yieldStrain <= 0) {
+            throw new InvalidColumnInput("Invalid steel input data");
+        }
 
         this.fyd = fyk/(10*gammaSteel); // in kN/cm2
         this.youngModulus = youngModulus/10; // in kn/cm2

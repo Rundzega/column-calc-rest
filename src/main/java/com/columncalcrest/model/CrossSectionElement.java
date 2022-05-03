@@ -32,6 +32,7 @@ public class CrossSectionElement {
     public CrossSectionElement(Concrete concreteClass, Steel steelClass, double xCoord, double yCoord) {
         this.concreteClass = concreteClass;
         this.steelClass = steelClass;
+
         this.xCoord = xCoord;
         this.yCoord = yCoord;
     }

@@ -1,5 +1,6 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.InvalidColumnInput;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -44,6 +45,10 @@ public class ConcreteRectangle {
                              @JsonProperty("height")double height,
                              @JsonProperty("xCenterCoord")double xCenterCoord,
                              @JsonProperty("yCenterCoord")double yCenterCoord ) {
+
+        if (width <= 0 || height <= 0) {
+            throw new InvalidColumnInput("Invalid rectangle input data");
+        }
 
         this.width = width;
         this.height = height;

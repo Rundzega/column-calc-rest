@@ -1,5 +1,7 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.ConcreteFailedException;
+import com.columncalcrest.exception.RebarFailedException;
 import com.columncalcrest.util.FitLinearPolynomialFunction;
 import com.columncalcrest.util.GaussLegendre;
 import org.apache.commons.math3.linear.*;
@@ -232,16 +234,6 @@ public class BarFiniteElement {
             degreeOfFreedomCounter.getAndIncrement();
         });
     }
-
-//    private double[] fitLinearPolynomialAuxFunction(double firstAbscissa, double secondAbcissa,
-//                                              double firstOrdinate, double secondOrdinate) {
-//
-//        WeightedObservedPoints yCoefficientPoints = new WeightedObservedPoints();
-//        yCoefficientPoints.add(firstAbscissa, firstOrdinate);
-//        yCoefficientPoints.add(secondAbcissa, secondOrdinate);
-//        PolynomialCurveFitter yFitter = PolynomialCurveFitter.create(1);
-//        return yFitter.fit(yCoefficientPoints.toList());
-//    }
 
     private void axialNodalLoadsAuxFunction(ArrayList<Double> legendreValues, ArrayList<Double> legendeWeights,
                                                    double zLoad, int degreeOfFreedomIndex, ArrayList<Double> zPositionsArray) {
@@ -508,6 +500,10 @@ public class BarFiniteElement {
         }
         this.nonLinearNodalForces.setEntry(degreeOfFreedomIndex,
                 sumVector.getEntry(degreeOfFreedomIndex) * this.length/2);
+    }
+
+    public boolean checkCrossSectionIsFailed() throws ConcreteFailedException, RebarFailedException {
+        return this.crossSection.checkIsFailed();
     }
 
     public NodeFiniteElement getInitialNode() {

@@ -1,17 +1,22 @@
 package com.columncalcrest.dto;
 
+import com.columncalcrest.exception.ConcreteFailedException;
+import com.columncalcrest.exception.InvalidColumnInput;
+import com.columncalcrest.exception.MaxIterationsExceededException;
+import com.columncalcrest.exception.RebarFailedException;
 import com.columncalcrest.model.Criteria;
 import com.columncalcrest.model.Column;
 import com.columncalcrest.model.CrossSection;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.math3.linear.SingularMatrixException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class ColumnResults {
 
-    private Column column;
-
+    @JsonProperty
+    private boolean isResultsAvailable;
     @JsonProperty
     private ArrayList<Double> uyDisplacements;
     @JsonProperty
@@ -53,8 +58,11 @@ public class ColumnResults {
     @JsonProperty
     private ArrayList<Double> myMaxSolicitingForces;
 
-    public ColumnResults(Column column, CrossSection crossSection, Criteria criteria) {
+    public ColumnResults(Column column,
+                         CrossSection crossSection,
+                         Criteria criteria) {
 
+        this.isResultsAvailable = true;
         this.uzDisplacements = column.getUzDisplacements();
         this.uxDisplacements = column.getUxDisplacements();
         this.uyDisplacements = column.getUyDisplacements();
@@ -105,12 +113,24 @@ public class ColumnResults {
         this.myMaxSolicitingForces = column.getSolicitingForcesPoints(this.mxForces, this.myForces, myMaxIndex);
     }
 
-    public Column getColumn() {
-        return column;
+    public ColumnResults(SingularMatrixException ex) {
+        this.isResultsAvailable = false;
     }
 
-    public void setColumn(Column column) {
-        this.column = column;
+    public ColumnResults(MaxIterationsExceededException ex) {
+        this.isResultsAvailable = false;
+    }
+
+    public ColumnResults(ConcreteFailedException ex) {
+        this.isResultsAvailable = false;
+    }
+
+    public ColumnResults(RebarFailedException ex) {
+        this.isResultsAvailable = false;
+    }
+
+    public ColumnResults(InvalidColumnInput ex) {
+        this.isResultsAvailable = false;
     }
 
     public ArrayList<Double> getUyDisplacements() {

@@ -1,7 +1,9 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.InvalidColumnInput;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 public class Concrete {
 
@@ -49,6 +51,10 @@ public class Concrete {
                     @JsonProperty("creepCoefficient")double creepCoefficient,
                     @JsonProperty("alpha") double alpha,
                     @JsonProperty("beta")double beta) {
+
+        if (fck <= 0 || gammaConc <= 0 || creepCoefficient <= 0 || alpha <= 0 || beta <= 0) {
+            throw new InvalidColumnInput("Invalid concrete input data");
+        }
 
         this.fcd = fck/(10 * gammaConc); // in kN/cm2
         this.effectiveCreepCoefficient = 0.57 * creepCoefficient;

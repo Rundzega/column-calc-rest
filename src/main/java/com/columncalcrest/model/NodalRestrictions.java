@@ -1,5 +1,7 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.InvalidColumnInput;
+
 public class NodalRestrictions {
 
     private boolean ux;
@@ -13,6 +15,7 @@ public class NodalRestrictions {
     private boolean ry;
 
     public NodalRestrictions(boolean ux, boolean uy, boolean uz, boolean rx, boolean ry) {
+
         this.ux = ux;
         this.uy = uy;
         this.uz = uz;

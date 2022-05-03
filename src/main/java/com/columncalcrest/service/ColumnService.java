@@ -1,5 +1,8 @@
 package com.columncalcrest.service;
 
+import com.columncalcrest.exception.ConcreteFailedException;
+import com.columncalcrest.exception.MaxIterationsExceededException;
+import com.columncalcrest.exception.RebarFailedException;
 import com.columncalcrest.model.*;
 import com.columncalcrest.dto.ColumnResults;
 import com.columncalcrest.model.*;
@@ -7,6 +10,7 @@ import com.columncalcrest.util.FitLinearPolynomialFunction;
 import com.columncalcrest.wrapper.ColumnWrapper;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math3.linear.SingularMatrixException;
 
 import java.util.ArrayList;
 
@@ -40,6 +44,7 @@ public class ColumnService {
                 bottomNodalLoads, topNodalLoads, crossSection, nodesList);
 
         Column column = new Column(nodesList, barsList);
+
 
         column.nonLinearSolve(criteria.getForcesTolerance(), criteria.getDisplacementsTolerance(),
                 criteria.getLoadIncrementsNumber(), criteria.getMaxIterationsPerIncrement());
@@ -80,6 +85,7 @@ public class ColumnService {
                     int rx = bottomRestrictions.isRx() ? 0 : 1;
                     int ry = bottomRestrictions.isRy() ? 0 : 1;
 
+
                     RealVector newBottomRestrictions = new ArrayRealVector(new double[] {uz, uy, ux, rx, ry});
                     newNode.setNodalRestrictions(newBottomRestrictions);
                 }
@@ -102,6 +108,7 @@ public class ColumnService {
                     int uz = topRestrictions.isUz() ? 0 : 1;
                     int rx = topRestrictions.isRx() ? 0 : 1;
                     int ry = topRestrictions.isRy() ? 0 : 1;
+
 
                     RealVector newTopRestrictions = new ArrayRealVector(new double[] {uz, uy, ux, rx, ry});
                     newNode.setNodalRestrictions(newTopRestrictions);

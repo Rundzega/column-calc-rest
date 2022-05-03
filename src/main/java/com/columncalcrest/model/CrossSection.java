@@ -1,5 +1,9 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.ConcreteFailedException;
+import com.columncalcrest.exception.InvalidColumnInput;
+import com.columncalcrest.exception.RebarFailedException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
@@ -70,6 +74,10 @@ public class CrossSection {
     public CrossSection(ArrayList<ConcreteRectangle> rectanglesArrayList, ArrayList<Rebar> rebarsList,
                         Concrete concreteClass, Steel steelClass, int numberOfDiscretizedX,
                         int numberOfDiscretizedY) {
+
+        if (rectanglesArrayList.size() == 0 || rebarsList.size() == 0 || concreteClass == null || steelClass == null) {
+            throw new InvalidColumnInput("Invalid cross section input data");
+        }
 
         this.rectanglesArrayList = rectanglesArrayList;
         this.rebarArrayList = rebarsList;
@@ -421,28 +429,24 @@ public class CrossSection {
         };
     }
 
-    public boolean hasFailed() {
-
-        //TODO: VER SE É ASSIM
+    public boolean checkIsFailed() throws ConcreteFailedException, RebarFailedException {
 
         // Checks wether the cross-section failed due to concrete crushing
         // or excessive steel alongation
-        try {
-            discretizedElementsList.forEach((element) -> {
-                if (element.isConcFailed()) {
-                    throw new RuntimeException();
-                }
-            });
 
-            rebarArrayList.forEach((rebar) -> {
-                if (rebar.isRebarFailed()) {
-                    throw new RuntimeException();
-                }
-            });
-        } catch (RuntimeException error) {
-            return false;
-        }
-        return true;
+        discretizedElementsList.forEach((element) -> {
+            if (element.isConcFailed()) {
+                throw new ConcreteFailedException("Concrete Failed");
+            }
+        });
+
+        rebarArrayList.forEach((rebar) -> {
+            if (rebar.isRebarFailed()) {
+                throw new RebarFailedException("Rebar Failed");
+            }
+        });
+
+        return false;
     }
 
     public double getxCenterOfGravity() {

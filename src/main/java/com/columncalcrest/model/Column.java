@@ -1,6 +1,10 @@
 package com.columncalcrest.model;
 
+import com.columncalcrest.exception.ConcreteFailedException;
+import com.columncalcrest.exception.MaxIterationsExceededException;
+import com.columncalcrest.exception.RebarFailedException;
 import org.apache.commons.math3.linear.*;
+import org.apache.commons.math3.optim.MaxIter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -185,8 +189,6 @@ public class Column {
 
             if (this.checkConvergence(forcesTolerance, displacementsTolerance, currentLoadIteration)) {
                 if (currentLoadIncrement == numberOfLoadIncrements) {
-                    System.out.println("converged");
-                    System.out.println(totalCounter);
                     return true;
                 }
                 this.currentIterationForcesVector = this.currentIterationForcesVector.add(this.loadIncrement);
@@ -203,7 +205,7 @@ public class Column {
             this.calcualteDisplacements(this.imbalanceForcesVector);
             totalCounter++;
         }
-        return false;
+        throw new MaxIterationsExceededException("Max number of iterations exceeded without convergence");
     }
 
 
@@ -276,7 +278,7 @@ public class Column {
         return globalStiffnessMatrix;
     }
 
-    private void calcInverselStiffnessMatrix(int totalDegreesOfFreedom, RealMatrix stiffnessMatrix) {
+    private void calcInverselStiffnessMatrix(int totalDegreesOfFreedom, RealMatrix stiffnessMatrix) throws SingularMatrixException {
         for (int row = 0; row < totalDegreesOfFreedom; row++) {
             for (int column = 0; column < totalDegreesOfFreedom; column++) {
                 if (this.boundaryConditionsVector.getEntry(row) == 0) {
@@ -372,11 +374,19 @@ public class Column {
         });
     }
 
+    public boolean checkCrossSectionIsFailed() throws ConcreteFailedException, RebarFailedException {
+
+        this.barsList.forEach(bar -> {
+            boolean crossSectionIsFailed = bar.checkCrossSectionIsFailed();
+        });
+        return false;
+    }
+
     public ArrayList<double[]> getResistanceDiagramPoints(CrossSection crossSection, Criteria criteria, int index,
                                                           ArrayList<Double> ndForces, ArrayList<Double> mxForces,
                                                           ArrayList<Double> myForces) {
 
-        double neutralAxisDepthTolerance = criteria.getNeutralAxisDepthTolerance();
+        double neutralAxisDepthTolerance = criteria.getNeutralAxisDepthTolerance() > 10 ? criteria.getNeutralAxisDepthTolerance() : 0.001;
         int numberOfDiagramPoints = criteria.getDiagramPointsNumber();
 
         int stepAngle = 360/criteria.getDiagramPointsNumber();
