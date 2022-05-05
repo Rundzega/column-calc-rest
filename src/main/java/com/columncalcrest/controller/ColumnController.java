@@ -12,6 +12,7 @@ import org.apache.commons.math3.linear.SingularMatrixException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ColumnController {
 
     @PostMapping("/test/post")
-    public ColumnResults columnResults(@NonNull @RequestBody ColumnWrapper newColumnWrapper) {
+    public ColumnResults columnResults(@NonNull @RequestBody ColumnWrapper newColumnWrapper) throws HttpMediaTypeNotAcceptableException {
 
 
 //        long startTime = System.nanoTime();
@@ -47,20 +48,25 @@ public class ColumnController {
                  InvalidColumnInput exception) {
 
             if ( exception instanceof SingularMatrixException ) {
-                System.out.println(exception.getMessage());
-                columnResults = new ColumnResults((SingularMatrixException) exception);
+                throw new HttpMediaTypeNotAcceptableException("Pilar instável");
+//                System.out.println(exception.getMessage());
+//                columnResults = new ColumnResults((SingularMatrixException) exception);
             } else if ( exception instanceof MaxIterationsExceededException ) {
-                System.out.println(exception.getMessage());
-                columnResults = new ColumnResults((MaxIterationsExceededException) exception);
+                throw new HttpMediaTypeNotAcceptableException("Número máximo de iterações excedido");
+//                System.out.println(exception.getMessage());
+//                columnResults = new ColumnResults((MaxIterationsExceededException) exception);
             } else if ( exception instanceof  ConcreteFailedException ){
-                System.out.println(exception.getMessage());
-                columnResults = new ColumnResults((ConcreteFailedException) exception);
+                throw new HttpMediaTypeNotAcceptableException("Esmagamento da seção de concreto");
+//                System.out.println(exception.getMessage());
+//                columnResults = new ColumnResults((ConcreteFailedException) exception);
             } else if ( exception instanceof  InvalidColumnInput ){
-                System.out.println((exception.getMessage()));
-                columnResults = new ColumnResults((InvalidColumnInput) exception);
+                throw new HttpMediaTypeNotAcceptableException("Dados de entrada inválidos");
+//                System.out.println((exception.getMessage()));
+//                columnResults = new ColumnResults((InvalidColumnInput) exception);
             } else {
-                System.out.println((exception.getMessage()));
-                columnResults = new ColumnResults((RebarFailedException) exception);
+                throw new HttpMediaTypeNotAcceptableException("Deformação máxima excedida na barra de aço");
+//                System.out.println((exception.getMessage()));
+//                columnResults = new ColumnResults((RebarFailedException) exception);
             }
         }
 

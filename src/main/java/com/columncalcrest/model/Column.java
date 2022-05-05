@@ -350,9 +350,9 @@ public class Column {
                         (((nodeIndex == ((this.nodesList.size() - 2) * 2))) && (localPointIndex.get() == 0)) ||
                         (nodeIndex != 0 && nodeIndex != ((this.nodesList.size() - 2) * 2) && localPointIndex.get() % 2 == 0)) {
 
-                    this.uzDisplacements.set(arrayIndex, this.uzDisplacements.get(arrayIndex) + uzDisplacement / 2);
-                    this.uyDisplacements.set(arrayIndex, this.uyDisplacements.get(arrayIndex) + uyDisplacement / 2);
-                    this.uxDisplacements.set(arrayIndex, this.uxDisplacements.get(arrayIndex) + uxDisplacement / 2);
+                    this.uzDisplacements.set(arrayIndex, this.uzDisplacements.get(arrayIndex) + uzDisplacement*100 / 2);
+                    this.uyDisplacements.set(arrayIndex, this.uyDisplacements.get(arrayIndex) + uyDisplacement*100 / 2);
+                    this.uxDisplacements.set(arrayIndex, this.uxDisplacements.get(arrayIndex) + uxDisplacement*100 / 2);
                     this.ndForces.set(arrayIndex, this.ndForces.get(arrayIndex) + ndForce / 2);
                     this.mxForces.set(arrayIndex, this.mxForces.get(arrayIndex) + mxForce / 2);
                     this.myForces.set(arrayIndex, this.myForces.get(arrayIndex) + myForce / 2);
@@ -360,9 +360,9 @@ public class Column {
 
                 } else {
 
-                    this.uzDisplacements.set(arrayIndex, this.uzDisplacements.get(arrayIndex) + uzDisplacement);
-                    this.uyDisplacements.set(arrayIndex, this.uyDisplacements.get(arrayIndex) + uyDisplacement);
-                    this.uxDisplacements.set(arrayIndex, this.uxDisplacements.get(arrayIndex) + uxDisplacement);
+                    this.uzDisplacements.set(arrayIndex, this.uzDisplacements.get(arrayIndex) + uzDisplacement*100);
+                    this.uyDisplacements.set(arrayIndex, this.uyDisplacements.get(arrayIndex) + uyDisplacement*100);
+                    this.uxDisplacements.set(arrayIndex, this.uxDisplacements.get(arrayIndex) + uxDisplacement*100);
                     this.ndForces.set(arrayIndex, this.ndForces.get(arrayIndex) + ndForce);
                     this.mxForces.set(arrayIndex, this.mxForces.get(arrayIndex) + mxForce);
                     this.myForces.set(arrayIndex, this.myForces.get(arrayIndex) + myForce);
