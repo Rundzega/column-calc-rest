@@ -6,4 +6,8 @@ public class MaxIterationsExceededException extends RuntimeException{
         super(msg);
     }
 
+    public MaxIterationsExceededException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
 }

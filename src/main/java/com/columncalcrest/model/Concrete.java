@@ -1,13 +1,27 @@
 package com.columncalcrest.model;
 
-import com.columncalcrest.exception.InvalidColumnInput;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class Concrete {
 
+    @Positive
+    @NotNull
+    private final double fck;
+
+    @Positive
+    @NotNull
+    private final double gammaConc;
+
+    @Positive
+    @NotNull
+    private final double creepCoefficient;
     // Design concrete compressive strenght in MPa
+
     private final double fcd;
 
     // Concrete creep coefficient
@@ -27,9 +41,13 @@ public class Concrete {
 
     // Alpha paramater utilized in concrete stress-strain diagram
 
+    @Positive
+    @NotNull
     private final double alpha;
 
     // Beta paramater utilized in concrete stress-strain diagram
+    @Positive
+    @NotNull
     private final double beta;
 
     // n Parameter utilized in concrete stress-strain diagram
@@ -45,17 +63,21 @@ public class Concrete {
     private final double  altConcStrainCreepModif;
 
 
-    @JsonCreator
-    public Concrete(@JsonProperty("fck") double fck,
-                    @JsonProperty("gammaConc")double gammaConc,
-                    @JsonProperty("creepCoefficient")double creepCoefficient,
-                    @JsonProperty("alpha") double alpha,
-                    @JsonProperty("beta")double beta) {
+    public Concrete(double fck,
+                    double gammaConc,
+                    double creepCoefficient,
+                    double alpha,
+                    double beta) {
 
-        if (fck <= 0 || gammaConc <= 0 || creepCoefficient <= 0 || alpha <= 0 || beta <= 0) {
-            throw new InvalidColumnInput("Invalid concrete input data");
-        }
 
+
+//        if (fck <= 0 || gammaConc <= 0 || creepCoefficient <= 0 || alpha <= 0 || beta <= 0) {
+//            throw new InvalidColumnInput("Invalid concrete input data");
+//        }
+
+        this.fck = fck;
+        this.gammaConc = gammaConc;
+        this.creepCoefficient = creepCoefficient;
         this.fcd = fck/(10 * gammaConc); // in kN/cm2
         this.effectiveCreepCoefficient = 0.57 * creepCoefficient;
         this.alpha = alpha;
@@ -76,6 +98,18 @@ public class Concrete {
 
 
 
+    }
+
+    public double getFck() {
+        return fck;
+    }
+
+    public double getGammaConc() {
+        return gammaConc;
+    }
+
+    public double getCreepCoefficient() {
+        return creepCoefficient;
     }
 
     public double getFcd() {

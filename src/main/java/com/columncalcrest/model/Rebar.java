@@ -4,9 +4,18 @@ import com.columncalcrest.exception.InvalidColumnInput;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 public class Rebar extends CrossSectionElement{
 
+    @Positive
+    @NotNull
+    private final double diameter;
     // Cross-Section area of the rebar in cm2
+
     private final double area;
 
     // Indicates wheter rebar has reached limit strain
@@ -15,24 +24,37 @@ public class Rebar extends CrossSectionElement{
     // Represents the compressive or tensile stress of the rebar
     private double steelStress;
 
+    @NotNull
+    @Valid
+    private Concrete concreteClass;
+
+    @NotNull
+    @Valid
+    private Steel steelClass;
+
+    @NotNull
+    private double xCoord;
+
+    @NotNull
+    private double yCoord;
 
     //diameter in mm
-    @JsonCreator
-    public Rebar(@JsonProperty("concreteClass")Concrete concreteClass,
-                 @JsonProperty("steelClass") Steel steelClass,
-                 @JsonProperty("diameter") double diameter,
-                 @JsonProperty("xCoord") double xCoord,
-                 @JsonProperty("yCoord") double yCoord) {
+//    @JsonCreator
+    public Rebar(Concrete concreteClass,
+                 Steel steelClass,
+                 double diameter,
+                 double xCoord,
+                 double yCoord) {
 
         super(concreteClass, steelClass, xCoord, yCoord);
 
-        if (diameter <= 0 || concreteClass == null || steelClass == null) {
-            throw new InvalidColumnInput("Invalid rebar input data");
-        }
-
+        this.concreteClass = concreteClass;
+        this.steelClass = steelClass;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+        this.diameter = diameter;
         this.area = (Math.PI*Math.pow(diameter, 2))/400; //cm2
         this.rebarFailed = false;
-
     }
 
     public void calculateSteelStress() {
@@ -52,6 +74,30 @@ public class Rebar extends CrossSectionElement{
             this.rebarFailed = true;
             this.steelStress = 0;
         }
+    }
+
+    public double getDiameter() {
+        return diameter;
+    }
+
+    @Override
+    public Concrete getConcreteClass() {
+        return concreteClass;
+    }
+
+    @Override
+    public Steel getSteelClass() {
+        return steelClass;
+    }
+
+    @Override
+    public double getxCoord() {
+        return xCoord;
+    }
+
+    @Override
+    public double getyCoord() {
+        return yCoord;
     }
 
     public double getArea() {

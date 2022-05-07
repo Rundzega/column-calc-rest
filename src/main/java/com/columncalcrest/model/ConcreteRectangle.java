@@ -3,21 +3,34 @@ package com.columncalcrest.model;
 import com.columncalcrest.exception.InvalidColumnInput;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class ConcreteRectangle {
 
     // This class represents the Rectangles used to create the Cross-Section of the Column
 
     // Rectangle widht
+    @Positive
+    @NotNull
     private final double width;
 
     // Rectangle height
+    @Positive
+    @NotNull
     private final double height;
 
     // X Coordinate of the center of the rectangle in cm
+
+    @NotNull
     private final double xCenterCoord;
 
     // Y Coordinate of the center of the rectangle in cm
+
+    @NotNull
     private final double yCenterCoord;
 
     // Area of the concrete rectangle in cm2
@@ -41,14 +54,10 @@ public class ConcreteRectangle {
 
     // width in cm, height in cm, xCenterCoord in cm, yCenterCoord in cm
     @JsonCreator
-    public ConcreteRectangle(@JsonProperty("width") double width,
-                             @JsonProperty("height")double height,
-                             @JsonProperty("xCenterCoord")double xCenterCoord,
-                             @JsonProperty("yCenterCoord")double yCenterCoord ) {
-
-        if (width <= 0 || height <= 0) {
-            throw new InvalidColumnInput("Invalid rectangle input data");
-        }
+    public ConcreteRectangle(double width,
+                             double height,
+                             double xCenterCoord,
+                             double yCenterCoord ) {
 
         this.width = width;
         this.height = height;

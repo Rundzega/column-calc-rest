@@ -1,19 +1,22 @@
 package com.columncalcrest.model;
 
+import javax.validation.constraints.NotNull;
+
 public class TopNodalLoads {
 
+    @NotNull
     private double fz;
-
+    @NotNull
     private double hx;
-
+    @NotNull
     private double hy;
-
+    @NotNull
     private double px;
-
+    @NotNull
     private double py;
-
+    @NotNull
     private double mx;
-
+    @NotNull
     private double my;
 
     public TopNodalLoads(double fz, double hx, double hy, double px, double py, double mx, double my) {

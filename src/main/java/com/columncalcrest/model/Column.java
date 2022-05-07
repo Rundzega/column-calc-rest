@@ -205,7 +205,7 @@ public class Column {
             this.calcualteDisplacements(this.imbalanceForcesVector);
             totalCounter++;
         }
-        throw new MaxIterationsExceededException("Max number of iterations exceeded without convergence");
+        throw new MaxIterationsExceededException("Número máximo de iterações atingido sem convergência  de forças e deslocamentos");
     }
 
 
@@ -379,6 +379,7 @@ public class Column {
         this.barsList.forEach(bar -> {
             boolean crossSectionIsFailed = bar.checkCrossSectionIsFailed();
         });
+
         return false;
     }
 

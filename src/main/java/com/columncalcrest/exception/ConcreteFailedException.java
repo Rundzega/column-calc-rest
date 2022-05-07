@@ -6,4 +6,8 @@ public class ConcreteFailedException extends RuntimeException{
         super(msg);
     }
 
+    public ConcreteFailedException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
 }

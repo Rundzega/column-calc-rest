@@ -1,17 +1,22 @@
 package com.columncalcrest.model;
 
+import javax.validation.constraints.NotNull;
+
 public class CrossSectionElement {
+
 
     // X coordinate of the center of the element in cm
     private double xCoord;
 
     // Y coordinate of the center of the element in cm
+
     private double yCoord;
 
     // Represents the strain of element
     private double strain;
 
     // Concrete class of the cross-section
+
     private Concrete concreteClass;
 
     // Steel class of the cross-section

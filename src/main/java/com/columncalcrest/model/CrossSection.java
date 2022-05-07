@@ -76,7 +76,7 @@ public class CrossSection {
                         int numberOfDiscretizedY) {
 
         if (rectanglesArrayList.size() == 0 || rebarsList.size() == 0 || concreteClass == null || steelClass == null) {
-            throw new InvalidColumnInput("Invalid cross section input data");
+            throw new InvalidColumnInput("Dados de entrada da seção transversal inválidos");
         }
 
         this.rectanglesArrayList = rectanglesArrayList;
@@ -436,13 +436,13 @@ public class CrossSection {
 
         discretizedElementsList.forEach((element) -> {
             if (element.isConcFailed()) {
-                throw new ConcreteFailedException("Concrete Failed");
+                throw new ConcreteFailedException("A seção transversal falhou: Concreto atingiu a deformação máxima permitida");
             }
         });
 
         rebarArrayList.forEach((rebar) -> {
             if (rebar.isRebarFailed()) {
-                throw new RebarFailedException("Rebar Failed");
+                throw new RebarFailedException("A seção transversal falhou: Aço atingiu a deformação máxima permitida");
             }
         });
 

@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ColumnController {
 
     @PostMapping("/test/post")
-    public ColumnResults columnResults(@NonNull @RequestBody ColumnWrapper newColumnWrapper) throws HttpMediaTypeNotAcceptableException {
+    public ColumnResults columnResults(@Valid @RequestBody ColumnWrapper newColumnWrapper) throws HttpMediaTypeNotAcceptableException {
 
 
 //        long startTime = System.nanoTime();
@@ -33,41 +35,14 @@ public class ColumnController {
 //        long memoryUsed = runtime.totalMemory() - runtime.freeMemory();
 //        double memoryUsedPercent = (memoryUsed * 100.0) / memoryMax;
 
-
         ColumnResults columnResults;
 
         try {
             ColumnService columnService = new ColumnService(newColumnWrapper);
 
             columnResults = columnService.getColumnResults();
-
-        } catch (SingularMatrixException |
-                 MaxIterationsExceededException |
-                 ConcreteFailedException |
-                 RebarFailedException |
-                 InvalidColumnInput exception) {
-
-            if ( exception instanceof SingularMatrixException ) {
-                throw new HttpMediaTypeNotAcceptableException("Pilar instável");
-//                System.out.println(exception.getMessage());
-//                columnResults = new ColumnResults((SingularMatrixException) exception);
-            } else if ( exception instanceof MaxIterationsExceededException ) {
-                throw new HttpMediaTypeNotAcceptableException("Número máximo de iterações excedido");
-//                System.out.println(exception.getMessage());
-//                columnResults = new ColumnResults((MaxIterationsExceededException) exception);
-            } else if ( exception instanceof  ConcreteFailedException ){
-                throw new HttpMediaTypeNotAcceptableException("Esmagamento da seção de concreto");
-//                System.out.println(exception.getMessage());
-//                columnResults = new ColumnResults((ConcreteFailedException) exception);
-            } else if ( exception instanceof  InvalidColumnInput ){
-                throw new HttpMediaTypeNotAcceptableException("Dados de entrada inválidos");
-//                System.out.println((exception.getMessage()));
-//                columnResults = new ColumnResults((InvalidColumnInput) exception);
-            } else {
-                throw new HttpMediaTypeNotAcceptableException("Deformação máxima excedida na barra de aço");
-//                System.out.println((exception.getMessage()));
-//                columnResults = new ColumnResults((RebarFailedException) exception);
-            }
+        } catch (SingularMatrixException exception) {
+            throw new InvalidColumnInput("Pilar instável devido às condições de contorno");
         }
 
 
