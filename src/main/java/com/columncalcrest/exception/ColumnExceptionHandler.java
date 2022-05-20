@@ -26,7 +26,6 @@ public class ColumnExceptionHandler {
             errors.add(fieldError.getField());
         });
 
-        System.out.println(errors);
 
         ApiException apiException = new ApiException(
                 "Missing/Invalid JSON Input data on fields" + errors.toString(),

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  column-calc-rest:
+    container_name: column-calc-rest-container
+    image: rundzega/column-calc-rest
+    build: .
+    ports:
+      - "8080:8080"

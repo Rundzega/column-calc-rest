@@ -94,7 +94,7 @@ public class CrossSectionValidation {
                     }
                 }
             }
-            if (!isCrossSectionContinuous.get()) {
+            if (!isCrossSectionContinuous.get() && rectangleArrayList.size() > 1) {
                 throw new InvalidColumnInput("Cross Section must be continuous");
             }
         });

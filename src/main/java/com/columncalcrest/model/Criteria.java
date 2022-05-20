@@ -90,7 +90,6 @@ public class Criteria {
 //        }
 
         this.finiteElementsNumber = finiteElementsNumber;
-        System.out.println(finiteElementsNumber);
         this.xDiscretizationsNumber = xDiscretizationsNumber;
         this.yDiscretizationsNumber = yDiscretizationsNumber;
         this.diagramPointsNumber = diagramPointsNumber;

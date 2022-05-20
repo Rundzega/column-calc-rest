@@ -25,7 +25,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ColumnController {
 
-    @PostMapping("/test/post")
+    @PostMapping("/column")
     public ColumnResults columnResults(@Valid @RequestBody ColumnWrapper newColumnWrapper) throws HttpMediaTypeNotAcceptableException {
 
 
