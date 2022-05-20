@@ -7,6 +7,7 @@ import com.columncalcrest.model.*;
 import com.columncalcrest.dto.ColumnResults;
 import com.columncalcrest.model.*;
 import com.columncalcrest.util.FitLinearPolynomialFunction;
+import com.columncalcrest.validation.CrossSectionValidation;
 import com.columncalcrest.wrapper.ColumnWrapper;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
@@ -26,6 +27,10 @@ public class ColumnService {
         ArrayList<ConcreteRectangle> rectanglesList = columnWrapper.getRectangleList();
 
         ArrayList<Rebar> rebarsList = columnWrapper.getRebarList();
+
+        CrossSectionValidation crossSectionValidation = new CrossSectionValidation();
+        crossSectionValidation.validateRectanglesPosition(rectanglesList);
+        crossSectionValidation.validateRebarsPosition(rebarsList, rectanglesList);
 
         Criteria criteria = columnWrapper.getCriteria();
         CrossSection crossSection = new CrossSection(rectanglesList, rebarsList, concrete,
