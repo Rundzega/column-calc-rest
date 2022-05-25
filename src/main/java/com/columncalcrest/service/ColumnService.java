@@ -91,7 +91,7 @@ public class ColumnService {
                     int ry = bottomRestrictions.isRy() ? 0 : 1;
 
 
-                    RealVector newBottomRestrictions = new ArrayRealVector(new double[] {uz, uy, ux, rx, ry});
+                    RealVector newBottomRestrictions = new ArrayRealVector(new double[] {uz, uy, rx, ux, ry});
                     newNode.setNodalRestrictions(newBottomRestrictions);
                 }
             } else if (i > numberOfFEM + 2) {
@@ -115,7 +115,7 @@ public class ColumnService {
                     int ry = topRestrictions.isRy() ? 0 : 1;
 
 
-                    RealVector newTopRestrictions = new ArrayRealVector(new double[] {uz, uy, ux, rx, ry});
+                    RealVector newTopRestrictions = new ArrayRealVector(new double[] {uz, uy, rx, ux, ry});
                     newNode.setNodalRestrictions(newTopRestrictions);
                 }
             } else {
