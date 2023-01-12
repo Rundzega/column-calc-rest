@@ -107,7 +107,9 @@ public class CrossSection {
                 this.discretizedElementsList.add(concElement);
             }
         }
+    }
 
+    public void setElementsCenterOfGravity() {
         this.discretizedElementsList.forEach((element) -> {
             element.setCoordRelativeToCSCenter(this);
         });
@@ -133,6 +135,8 @@ public class CrossSection {
 
         this.xCenterOfGravity = YStaticalMoment.get() / totalArea.get();
         this.yCenterOfGravity = XStaticalMoment.get() / totalArea.get();
+        this.setElementsCenterOfGravity();
+
         AtomicReference<Double> accXInertialMoment = new AtomicReference<>((double) 0);
         AtomicReference<Double> accYInertialMoment = new AtomicReference<>((double) 0);
 

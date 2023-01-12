@@ -16,19 +16,19 @@ public class BarFiniteElement {
     // This class represents 1D Elements of the Finite Element Method
 
     // Represents the initial node of the 1D element of the structure
-    private NodeFiniteElement initialNode;
+    private final NodeFiniteElement initialNode;
 
     // Represents the final node of the 1D element of the structure
-    private NodeFiniteElement finalNode;
+    private final NodeFiniteElement finalNode;
 
     // Represents the length of the 1D element of the structure
-    private double length;
+    private final double length;
 
     // Represents the unique id of the 1D element of the structure
-    private int id;
+    private final int id;
 
     // Represents the cross section of the 1D element of the structure
-    private CrossSection crossSection;
+    private final CrossSection crossSection;
 
     // Represents the stiffness matrix of the 1D element of the structure
     private RealMatrix stiffnessMatrix;

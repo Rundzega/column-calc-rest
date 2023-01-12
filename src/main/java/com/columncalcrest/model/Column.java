@@ -444,6 +444,4 @@ public class Column {
     public ArrayList<Double> getMxForces() {
         return mxForces;
     }
-
-
 }

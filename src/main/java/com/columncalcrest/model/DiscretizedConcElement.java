@@ -3,7 +3,7 @@ package com.columncalcrest.model;
 public class DiscretizedConcElement extends CrossSectionElement{
 
     // Area of the discretized concrete element of the cross section
-    private double area;
+    private final double area;
 
     // Array containing the x and y coordinates of each vertice of the discretized element
     private double[][] verticesArray;

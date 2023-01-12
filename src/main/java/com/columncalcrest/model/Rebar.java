@@ -26,17 +26,17 @@ public class Rebar extends CrossSectionElement{
 
     @NotNull
     @Valid
-    private Concrete concreteClass;
+    private final Concrete concreteClass;
 
     @NotNull
     @Valid
-    private Steel steelClass;
+    private final Steel steelClass;
 
     @NotNull
-    private double xCoord;
+    private final double xCoord;
 
     @NotNull
-    private double yCoord;
+    private final double yCoord;
 
     //diameter in mm
 //    @JsonCreator

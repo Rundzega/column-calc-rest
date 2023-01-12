@@ -6,21 +6,21 @@ public class CrossSectionElement {
 
 
     // X coordinate of the center of the element in cm
-    private double xCoord;
+    private final double xCoord;
 
     // Y coordinate of the center of the element in cm
 
-    private double yCoord;
+    private final double yCoord;
 
     // Represents the strain of element
     private double strain;
 
     // Concrete class of the cross-section
 
-    private Concrete concreteClass;
+    private final Concrete concreteClass;
 
     // Steel class of the cross-section
-    private Steel steelClass;
+    private final Steel steelClass;
 
     // Represents the compressive or tensile stress of concrete element
     private double concStress;
